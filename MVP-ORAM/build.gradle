@@ -52,7 +52,6 @@ distributions {
 				from(configurations.runtimeClasspath)
 			}
 			from 'runscripts/smartrun.sh'
-			from 'runscripts/smartrun.cmd'
 		}
 	}
 }
