@@ -1,0 +1,66 @@
+# Default configuration file
+
+# Name of the file each storage server will store information too
+oram_file=oram.txt
+
+# Amount of threads to be used for asynchronous I/O
+proxy_thread_count=10
+
+# The writeback threshold for the proxy
+write_back_threshold=8
+
+# Client port
+client_port=12337
+
+# Proxy and server hostname/port for each ORAM unit
+proxy_hostname0=127.0.0.1
+proxy_port0=12339
+server_hostname0=127.0.0.1
+server_port0=12338
+
+proxy_hostname1=127.0.0.1
+proxy_port1=13339
+server_hostname1=127.0.0.1
+server_port1=13338
+
+proxy_hostname2=127.0.0.1
+proxy_port2=14339
+server_hostname2=127.0.0.1
+server_port2=14338
+
+# Size of blocks
+block_size=4096
+
+# Amount of blocks that will be put in a bucket
+blocks_in_bucket=4
+
+# The size of the meta information for each block. This is implementation specific
+# so be careful when changing it
+block_meta_data_size=18
+
+# The size of the initialization vector to be used for encryption. This is also specific
+# to the type of encryption being used, so be careful when changing it
+iv_size=16
+
+# The minimum desired size for storage in MB
+min_server_size=100
+
+# The amount of storage servers per ORAM unit
+num_storage_servers=1
+
+# The amout of ORAM units
+num_oram_units=3
+
+# The maximum number of in-progress operations that can be stored
+# in the incomplete cache
+incomplete_cache_limit = 100
+
+# The maximum client ID (same as the maximum number of clients)
+max_client_id = 90
+
+# The number of threads a proxy will use to process client requests
+proxy_service_threads = 128
+
+access_daemon_delay = 5000
+
+client_timeout = 10000

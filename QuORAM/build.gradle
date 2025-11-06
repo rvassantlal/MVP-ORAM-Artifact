@@ -1,0 +1,109 @@
+plugins {
+	id 'java'
+	id 'distribution'
+	id 'org.hidetake.ssh' version '2.10.1'
+}
+
+group 'org.example'
+version '1.0'
+
+compileJava {
+	sourceCompatibility = 8
+	targetCompatibility = 8
+}
+
+jar {
+	archivesBaseName="QuORAM"
+	project.version=""
+}
+
+distributions {
+	main {
+		contents{
+			into('config') {
+				from 'config'
+			}
+			into('lib') {
+				from jar
+				from(configurations.runtimeClasspath)
+			}
+			from 'runscripts/smartrun.sh'
+		}
+	}
+}
+
+task localDeploy(dependsOn: installDist) {
+	doLast {
+		int nWorkers = project.hasProperty('nWorkers') ? project.nWorkers.toInteger() : 6
+
+		def fileSeparator = System.getProperty("file.separator")
+		def src = project.buildDir.name + fileSeparator + "install" + fileSeparator + project.name
+		def workingDirectory = project.buildDir.name + fileSeparator + "local" + fileSeparator
+
+		println ("Deploying project into ${workingDirectory}")
+		for (i in 0..<nWorkers) {
+			def target = workingDirectory + "worker${i}"
+			copy {
+				from src
+				into target
+			}
+		}
+
+		def target = workingDirectory + "controller"
+		copy {
+			from src
+			into target
+		}
+	}
+}
+
+task remoteDeploy(dependsOn: installDist) {
+	doLast {
+		def fileSeparator = System.getProperty("file.separator")
+		def src = project.buildDir.name + fileSeparator + "install" + fileSeparator + project.name
+		println(src)
+		def target = '~/'
+		ssh.run {
+			session(remotes.master) {
+				put from: src, into: target
+			}
+		}
+	}
+}
+
+ssh.settings {
+	fileTransfer = 'scp'
+}
+
+remotes {
+	master {
+		//Create a gradle.properties and set the following properties: remoteDeployMasterHost, remoteDeployMasterUser,
+		// remoteDeployMasterPrivateKeyFile
+		if (project.hasProperty("remoteDeployMasterHost")) {
+			host = remoteDeployMasterHost
+		}
+		if (project.hasProperty("remoteDeployMasterUser")) {
+			user = remoteDeployMasterUser
+		}
+		if (project.hasProperty("remoteDeployMasterPrivateKeyFile")) {
+			identity = file(remoteDeployMasterPrivateKeyFile)
+		}
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation fileTree('lib'){include '*.jar'}
+
+	// https://mvnrepository.com/artifact/ch.qos.logback/logback-core
+	implementation 'ch.qos.logback:logback-core:1.2.5'
+
+	// https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+	implementation 'ch.qos.logback:logback-classic:1.2.5'
+
+	// https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+	implementation 'org.slf4j:slf4j-api:1.7.32'
+}
