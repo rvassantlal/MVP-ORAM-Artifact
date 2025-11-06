@@ -544,6 +544,9 @@ public class MeasurementBenchmarkStrategy implements IBenchmarkStrategy, IWorker
 		if (errorMessage.contains("Connection reset by the client")) {
 			return;
 		}
+		if (errorMessage.contains("Connection refused")) {
+			return;
+		}
 
 		if (serverWorkersIds.contains(workerId)) {
 			logger.error("Error in server worker {}: {}", workerId, errorMessage);
