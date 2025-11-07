@@ -19,7 +19,7 @@ system "mkdir -p " . output_dir
 
 
 set terminal pdf  size 15cm, 6cm enhanced
-set output output_dir . "/E3.pdf"
+set output output_dir . "/comparison.pdf"
 
 set grid
 set multiplot
