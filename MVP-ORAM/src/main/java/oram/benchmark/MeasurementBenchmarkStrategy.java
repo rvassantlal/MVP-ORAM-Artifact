@@ -237,8 +237,8 @@ public class MeasurementBenchmarkStrategy implements IBenchmarkStrategy, IWorker
 											}
 
 											//Wait for system to stabilize
-											logger.info("Waiting 15s...");
-											sleepSeconds(15);
+											logger.info("Waiting 5s...");
+											sleepSeconds(5);
 
 											//Get measurements
 											getMeasurements(measureResources, measurementDuration);

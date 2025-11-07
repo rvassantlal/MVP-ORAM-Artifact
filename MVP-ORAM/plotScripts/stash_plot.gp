@@ -6,12 +6,12 @@ if (!exists("O") || !exists("L") || !exists("Z") || !exists("B") || !exists("c_m
 
 data_dir = O . "/output/processed_data/"
 
-stash_zipf_1_data = sprintf("%sf_0_height_%s_bucket_%s_block_%s_zipf_0.000001_c_max_%s_clients_15_stashes.dat", data_dir, L, Z, B, c_max)
-stash_zipf_2_data = sprintf("%sf_0_height_%s_bucket_%s_block_%s_zipf_1.0_c_max_%s_clients_15_stashes.dat", data_dir, L, Z, B, c_max)
-stash_zipf_3_data = sprintf("%sf_0_height_%s_bucket_%s_block_%s_zipf_2.0_c_max_%s_clients_15_stashes.dat", data_dir, L, Z, B, c_max)
+stash_zipf_1_data = sprintf("%sf_0_height_%s_bucket_%s_block_%s_zipf_0.000001_c_max_%s_clients_5_stashes.dat", data_dir, L, Z, B, c_max)
+stash_zipf_2_data = sprintf("%sf_0_height_%s_bucket_%s_block_%s_zipf_1.0_c_max_%s_clients_5_stashes.dat", data_dir, L, Z, B, c_max)
+stash_zipf_3_data = sprintf("%sf_0_height_%s_bucket_%s_block_%s_zipf_2.0_c_max_%s_clients_5_stashes.dat", data_dir, L, Z, B, c_max)
 stash_clients_1_data = sprintf("%sf_0_height_%s_bucket_%s_block_%s_zipf_1.0_c_max_%s_clients_1_stashes.dat", data_dir, L, Z, B, c_max)
-stash_clients_2_data = sprintf("%sf_0_height_%s_bucket_%s_block_%s_zipf_1.0_c_max_%s_clients_25_stashes.dat", data_dir, L, Z, B, c_max)
-stash_clients_3_data = sprintf("%sf_0_height_%s_bucket_%s_block_%s_zipf_1.0_c_max_%s_clients_50_stashes.dat", data_dir, L, Z, B, c_max)
+stash_clients_2_data = sprintf("%sf_0_height_%s_bucket_%s_block_%s_zipf_1.0_c_max_%s_clients_10_stashes.dat", data_dir, L, Z, B, c_max)
+stash_clients_3_data = sprintf("%sf_0_height_%s_bucket_%s_block_%s_zipf_1.0_c_max_%s_clients_15_stashes.dat", data_dir, L, Z, B, c_max)
 
 output_dir = O . "/output/plots"
 system "mkdir -p " . output_dir
@@ -43,7 +43,7 @@ unset label
 set origin 0.5,0
 set label "(c) Impact of concurrent clients" font "15" at graph 0.18, graph -0.3
 plot stash_clients_1_data using 1:2 with linespoints title "c = 1" dt 1 lw 2 pt 5 ps 0.5, \
-	stash_clients_2_data using 1:2 with linespoints title "c = 25" dt 2 lw 2 pt 9 ps 0.5, \
-	stash_clients_3_data using 1:2 with linespoints title "c = 50" dt 4 lw 2 pt 7 ps 0.5
+	stash_clients_2_data using 1:2 with linespoints title "c = 10" dt 2 lw 2 pt 9 ps 0.5, \
+	stash_clients_3_data using 1:2 with linespoints title "c = 15" dt 4 lw 2 pt 7 ps 0.5
 
 unset multiplot
