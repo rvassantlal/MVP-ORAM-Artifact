@@ -23,7 +23,7 @@ set grid
 set multiplot
 set xlabel "Time (min)"
 set ylabel "#Blocks"
-set yrange [0:250]
+set yrange [0:*]
 set xrange [0:D]
 
 
