@@ -537,25 +537,16 @@ public class MeasurementBenchmarkStrategy implements IBenchmarkStrategy, IWorker
 
 	@Override
 	public void onError(int workerId, String errorMessage) {
-		if (errorMessage.contains("Impossible to connect to client")) {
+		if (errorMessage.contains("OutOfMemoryError")) {
+			logger.error("Worker {} ran out of memory!", workerId);
 			return;
 		}
-		if (errorMessage.contains("Replica disconnected. Connection reset by peer.")) {
-			return;
-		}
-		if (errorMessage.contains("Connection reset by the client")) {
-			return;
-		}
-		if (errorMessage.contains("Connection refused")) {
-			return;
-		}
-
 		if (serverWorkersIds.contains(workerId)) {
-			logger.error("Error in server worker {}: {}", workerId, errorMessage);
+			logger.debug("Error in server worker {}: {}", workerId, errorMessage);
 		} else if (clientWorkersIds.contains(workerId)) {
-			logger.error("Error in client worker {}: {}", workerId, errorMessage);
+			logger.debug("Error in client worker {}: {}", workerId, errorMessage);
 		} else {
-			logger.error("Error in unused worker {}: {}", workerId, errorMessage);
+			logger.debug("Error in unused worker {}: {}", workerId, errorMessage);
 		}
 	}
 
